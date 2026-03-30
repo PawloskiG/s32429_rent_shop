@@ -12,3 +12,5 @@ Krótki opis decyzji projektowych:
 - Interfejs użytkownika: dodano osobny plik `InteractiveMenu.cs` z tekstowym menu konsolowym, które pozwala na interaktywne testowanie funkcji.
 - Dalej chciałbym rozbudować aplikację o pełną obsługę zdarzeń (usuwanie użytkownika, modyfikacja sprzętu), co przy obecnym podziale na DOMAIN, SERVICE wydaje mi się łatwe do zaimplementowania
 - Przygotowałem możliwość filtrowania raportów po przekazanych predykatach (metody takie jak FindUser), ale nie udało mi się tego zaimplementować w menu, ale same metody wykorzystuję w kodzie.
+
+Projekt utworzono w środowisku Microsoft Visual Studio 2026 Community
