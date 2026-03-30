@@ -112,5 +112,7 @@ class Program
         service.GenerateRaportSummary();
 
         service.ExportAllToJson();
+
+        InteractiveMenu.Run(service);
     }
 }
