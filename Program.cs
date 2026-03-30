@@ -110,5 +110,7 @@ class Program
         service.GenerateReportEquipment();
         service.GenerateRaportRent();
         service.GenerateRaportSummary();
+
+        service.ExportAllToJson();
     }
 }
