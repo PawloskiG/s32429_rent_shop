@@ -67,7 +67,7 @@ namespace s32429_rent_shop.DOMAIN
             PrintBaseInfo();
             Console.WriteLine($"Resolution: {Resolution}");
             Console.WriteLine($"Lumens: {Lumens}");
-            Console.WriteLine($"Interfaces: {Interfaces}");
+            Console.WriteLine($"Interfaces: {string.Join(", ", Interfaces.ConvertAll(i => i.ToString()))}");
         }
     }
 }
