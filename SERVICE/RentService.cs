@@ -1,6 +1,7 @@
 ﻿using s32429_rent_shop.DOMAIN;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace s32429_rent_shop.SERVICE
@@ -14,11 +15,8 @@ namespace s32429_rent_shop.SERVICE
         public void AddEquipment(Equipment equipment) => _equipment.Add(equipment);
         public void AddUser(User user) => _users.Add(user);
 
-        public void RentEquipment(Guid equipmentId, Guid userId, int days)
+        public void RentEquipment(Equipment equipment, User user, int days)
         { 
-            var equipment = _equipment.First(e => e.Id == equipmentId);
-            var user = _users.First(u => u.Id == userId);
-
             if(equipment == null)
                 throw new Exception("Equipment not found");
             if (user == null)
@@ -27,7 +25,7 @@ namespace s32429_rent_shop.SERVICE
             if (equipment.Status != Equipment_Status.Available)
                 throw new Exception("Equipment not available");
 
-            var activeLoans = _rents.Count(r => r.User.Id == userId && r.ReturnDate == null);
+            var activeLoans = _rents.Count(r => r.User.Id == user.Id && r.ReturnDate == null);
             if (activeLoans >= user.MaxLoans)
                 throw new Exception("User exceeded limit");
 
@@ -36,12 +34,12 @@ namespace s32429_rent_shop.SERVICE
             equipment.Status = Equipment_Status.Rented;
         }
 
-        public void ReturnEquipment(Guid equipmentId)
+        public void ReturnEquipment(Equipment equipment)
         {
-            if (equipmentId == Guid.Empty)
+            if (equipment == null)
                 throw new ArgumentException("Invalid equipment ID");
 
-            var rental = _rents.First(r => r.Equipment.Id == equipmentId && r.ReturnDate == null);
+            var rental = _rents.First(r => r.Equipment.Id == equipment.Id && r.ReturnDate == null);
             rental.Return();
             rental.Equipment.Status = Equipment_Status.Available;
 
@@ -51,11 +49,18 @@ namespace s32429_rent_shop.SERVICE
         }
 
         public IEnumerable<Equipment> GetAllEquipment() => _equipment;
+
+        public IEnumerable<Equipment> FindEquipment(Func<Equipment, bool> predicate) => _equipment.Where(predicate);
+
         public IEnumerable<Equipment> GetAvailableEquipment() => _equipment.Where(e => e.Status == Equipment_Status.Available);
 
         public IEnumerable<User> GetAllUser() => _users;
 
+        public IEnumerable<User> FindUsers(Func<User, bool> predicate) => _users.Where(predicate);
+
         public IEnumerable<Rent> GetAllRent() => _rents;
+
+        public IEnumerable<Rent> FindRents(Func<Rent, bool> predicate) => _rents.Where(predicate);
 
         public IEnumerable<Rent> GetUserActiveRentals(Guid userId) =>
             _rents.Where(r => r.User.Id == userId && r.ReturnDate == null);
@@ -68,6 +73,8 @@ namespace s32429_rent_shop.SERVICE
             var eq = _equipment.First(e => e.Id == equipmentId);
             eq.Status = Equipment_Status.Unavailable;
         }
+
+
 
         public void GenerateReportEquipment()
         {

@@ -62,29 +62,39 @@ class Program
         
 
         // Przykładowe wypożyczenie sprzętu                                                                 # 3
-        var userForRent = service.GetAllUser().FirstOrDefault(u => u.PESEL.Equals("900303543gf45", StringComparison.OrdinalIgnoreCase));
-        var equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("JSI89S0", StringComparison.OrdinalIgnoreCase));
+        var userForRent = service.FindUsers(u => u.PESEL.Equals("90030354345", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+        var equipmentForRent = service.FindEquipment(e => e.Serial_Number.Equals("JSI89S0", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
         try
         {
-            service.RentEquipment(equipmentForRent.Id, userForRent.Id, 5);
+            service.RentEquipment(equipmentForRent, userForRent, 5);
 
-            equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("PRJ12345", StringComparison.OrdinalIgnoreCase));
+            equipmentForRent = service.FindEquipment(e => e.Serial_Number.Equals("PRJ12345", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 
-            service.RentEquipment(equipmentForRent.Id, userForRent.Id, 2);
-
-            // Próba wypożyczenia tego samego sprzętu ponownie i przekroczenie limitu wypożyczeń przez studenta # 4
-            //service.RentEquipment(equipmentForRent.Id, userForRent.Id, 2); 
+            service.RentEquipment(equipmentForRent, userForRent, 2);
 
             // Przykładowe zwrócenie sprzętu w terminie                                                         # 5
-            service.ReturnEquipment(equipmentForRent.Id);
+            service.ReturnEquipment(equipmentForRent);
 
             // Próba zwrotu opóźnionego sprzętu i naliczenie kary                                               # 6
-            userForRent = service.GetAllUser().FirstOrDefault(u => u.PESEL.Equals("90030354321", StringComparison.OrdinalIgnoreCase));
-            equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("CAM98765", StringComparison.OrdinalIgnoreCase));
-            service.RentEquipment(equipmentForRent.Id, userForRent.Id, -5);
+            userForRent = service.FindUsers(u => u.PESEL.Equals("90030354321", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            equipmentForRent = service.FindEquipment(e => e.Serial_Number.Equals("CAM98765", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            service.RentEquipment(equipmentForRent, userForRent, -5);
         }
         catch (Exception ex)
+        {
+            var prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Error during renting/returning an equipment: {ex.Message}");
+            Console.ForegroundColor = prevColor;
+        }
+
+        try
+        {
+            // Próba wypożyczenia tego samego sprzętu ponownie i przekroczenie limitu wypożyczeń przez studenta # 4
+            service.RentEquipment(equipmentForRent, userForRent, 2); 
+        }
+        catch(Exception ex)
         {
             var prevColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
