@@ -76,12 +76,14 @@ namespace s32429_rent_shop.SERVICE
 
 
 
-        public void GenerateReportEquipment()
+        public void GenerateReportEquipment(Func<Equipment, bool> predicate = null)
         {
             Console.WriteLine("====================     RAPORT EQUIPMENT    ====================");
             Console.WriteLine("");
 
-            foreach (var equipment in _equipment)
+            var list = predicate == null ? GetAllEquipment() : FindEquipment(predicate);
+
+            foreach (var equipment in list)
             {
                 equipment.PrintInfo();
             }
@@ -89,24 +91,28 @@ namespace s32429_rent_shop.SERVICE
             Console.WriteLine("");
         }
 
-        public void GenerateReportUser()
+        public void GenerateReportUser(Func<User, bool> predicate = null)
         {
             Console.WriteLine("====================     RAPORT USERS        ====================");
             Console.WriteLine("");
 
-            foreach (var user in _users)
+            var list = predicate == null ? GetAllUser() : FindUsers(predicate);
+
+            foreach (var user in list)
             {
                 user.PrintInfo();
             }
             Console.WriteLine("");
         }
 
-        public void GenerateRaportRent()
+        public void GenerateRaportRent(Func<Rent, bool> predicate = null)
         {
             Console.WriteLine("====================     RAPORT RENTS        ====================");
             Console.WriteLine("");
 
-            foreach (var rent in _rents)
+            var list = predicate == null ? GetAllRent() : FindRents(predicate);
+
+            foreach (var rent in list)
             {
                 rent.PrintInfo();
             }
