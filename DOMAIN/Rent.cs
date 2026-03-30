@@ -53,8 +53,9 @@ namespace s32429_rent_shop.DOMAIN
             {
                 if (value == default)
                     throw new ArgumentException("DueDate musi być prawidłową datą");
-                if (_startDate != default && value < _startDate)
-                    throw new ArgumentException("DueDate nie może być wcześniejsza niż StartDate");
+                // wykomentowane ze względu na punkt 4 i 6 ze scenariusza demonstracyjnego, muszę jakoś wpisać datę do zwrotu starszą niż bieżący dzień
+                //if (_startDate != default && value < _startDate)
+                //throw new ArgumentException("DueDate nie może być wcześniejsza niż StartDate");
                 _dueDate = value;
             }
         }
@@ -73,8 +74,9 @@ namespace s32429_rent_shop.DOMAIN
 
         public Rent(Equipment equipment, User user, int days)
         {
-            if (days <= 0)
-                throw new ArgumentException("Liczba dni musi być większa od zera", nameof(days));
+            // wykomentowane ze względu na punkt 4 i 6 ze scenariusza demonstracyjnego, muszę jakoś wpisać datę do zwrotu starszą niż bieżący dzień
+            //if (days <= 0)
+                //throw new ArgumentException("Liczba dni musi być większa od zera", nameof(days));
 
             this.Equipment = equipment;
             this.User = user;

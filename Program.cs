@@ -9,7 +9,7 @@ class Program
     {
         var service = new RentService();
 
-        // Przykładowe dodanie sprzętu do systemu
+        // Przykładowe dodanie sprzętu do systemu                                                            #1
         service.AddEquipment(new Laptop(
             "Dell",
             "XPS 15",
@@ -36,11 +36,11 @@ class Program
             Camera_Interface.USB_C
         ));
 
-        // Przykładowe dodanie użytkowników do systemu
+        // Przykładowe dodanie użytkowników do systemu                                                      # 2
         service.AddUser(new Student("Jan", "Kowalski", "90030354345"));
         service.AddUser(new Employee("Anna", "Nowak", "90030354321"));
 
-        // Przykładowe wypożyczenie sprzętu
+        // Przykładowe wypożyczenie sprzętu                                                                 # 3
         var userForRent = service.GetAllUser().FirstOrDefault(u => u.PESEL.Equals("90030354345", StringComparison.OrdinalIgnoreCase));
         var equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("JSI89S0", StringComparison.OrdinalIgnoreCase));
 
@@ -50,10 +50,19 @@ class Program
 
         service.RentEquipment(equipmentForRent.Id, userForRent.Id, 2);
 
-        // Przykładowe zwrócenie sprzętu
+        // Próba wypożyczenia tego samego sprzętu ponownie i przekroczenie limitu wypożyczeń przez studenta # 4
+        //service.RentEquipment(equipmentForRent.Id, userForRent.Id, 2); 
+
+        // Przykładowe zwrócenie sprzętu w terminie                                                         # 5
         service.ReturnEquipment(equipmentForRent.Id);
 
+        // Próba zwrotu opóźnionego sprzętu i naliczenie kary                                               # 6
+        userForRent = service.GetAllUser().FirstOrDefault(u => u.PESEL.Equals("90030354321", StringComparison.OrdinalIgnoreCase));
+        equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("CAM98765", StringComparison.OrdinalIgnoreCase));
+        service.RentEquipment(equipmentForRent.Id, userForRent.Id, -5);
 
+
+        // Generowanie raportów                                                                             # 7
         service.GenerateReportUser();
         service.GenerateReportEquipment();
         service.GenerateRaportRent();
