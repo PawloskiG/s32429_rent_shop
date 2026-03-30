@@ -14,8 +14,29 @@ namespace s32429_rent_shop.DOMAIN
 
     public class Camera : Equipment
     {
-        private int Megapixels { get; set; }
-        private Camera_Interface Camera_Interface { get; set; }
+        private int _megapixels;
+        public int Megapixels
+        {
+            get => _megapixels;
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException("Megapiksele muszą być większe od zera");
+                _megapixels = value;
+            }
+        }
+
+        private Camera_Interface _cameraInterface;
+        public Camera_Interface Camera_Interface
+        {
+            get => _cameraInterface;
+            set
+            {
+                if (!Enum.IsDefined(typeof(Camera_Interface), value))
+                    throw new ArgumentException("Niepoprawny interfejs kamery");
+                _cameraInterface = value;
+            }
+        }
 
         public Camera(string Vendor, string Model, string Serial_Number, int Megapixels, Camera_Interface Camera_Interface) : base(Vendor, Model, Serial_Number)
         {
