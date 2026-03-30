@@ -16,6 +16,12 @@ namespace s32429_rent_shop.SERVICE
 
         public void RentEquipment(Guid equipmentId, Guid userId, int days)
         {
+            if(equipmentId == Guid.Empty)
+                throw new ArgumentException("Invalid equipment ID");
+
+            if(userId == Guid.Empty)
+                throw new ArgumentException("Invalid user ID");
+
             var equipment = _equipment.First(e => e.Id == equipmentId);
             var user = _users.First(u => u.Id == userId);
 
@@ -33,6 +39,9 @@ namespace s32429_rent_shop.SERVICE
 
         public void ReturnEquipment(Guid equipmentId)
         {
+            if (equipmentId == Guid.Empty)
+                throw new ArgumentException("Invalid equipment ID");
+
             var rental = _rents.First(r => r.Equipment.Id == equipmentId && r.ReturnDate == null);
             rental.Return();
             rental.Equipment.Status = Equipment_Status.Available;
