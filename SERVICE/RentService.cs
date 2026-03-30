@@ -17,6 +17,10 @@ namespace s32429_rent_shop.SERVICE
         public IEnumerable<Equipment> GetAllEquipment() => _equipment;
         public IEnumerable<Equipment> GetAvailableEquipment() => _equipment.Where(e => e.Status == Equipment_Status.Available);
 
+        public IEnumerable<User> GetAllUser() => _users;
+
+        public IEnumerable<Rent> GetAllRent() => _rents;
+
         public void RentEquipment(Guid equipmentId, Guid userId, int days)
         {
             var equipment = _equipment.First(e => e.Id == equipmentId);
@@ -57,14 +61,27 @@ namespace s32429_rent_shop.SERVICE
             eq.Status = Equipment_Status.Unavailable;
         }
 
-        public void GenerateReport()
+        public void GenerateReportEquipment()
         {
-            Console.WriteLine("=== REPORT ===");
-            Console.WriteLine($"Total equipment: {_equipment.Count}");
-            Console.WriteLine($"Available: {_equipment.Count(e => e.Status == Equipment_Status.Available)}");
-            Console.WriteLine($"Rented: {_equipment.Count(e => e.Status == Equipment_Status.Rented)}");
-            Console.WriteLine($"Unavailable: {_equipment.Count(e => e.Status == Equipment_Status.Unavailable)}");
-            Console.WriteLine($"Active rentals: {_rents.Count(r => r.ReturnDate == null)}");
+            Console.WriteLine("========== RAPORT EQUIPMENT ==========");
+            Console.WriteLine("");
+
+            foreach (var equipment in _equipment)
+            {
+
+            }
+        }
+
+        public void GenerateReportUser()
+        {
+            Console.WriteLine("========== RAPORT USERS ==========");
+            Console.WriteLine("");
+
+            foreach (var user in _users)
+            {
+                user.PrintInfo();
+            }
+            Console.WriteLine("");
         }
     }
 }

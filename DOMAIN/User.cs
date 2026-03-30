@@ -53,17 +53,36 @@ namespace s32429_rent_shop.DOMAIN
         }
 
         public abstract int MaxLoans { get; }
+        public abstract void PrintInfo();
     }
 
     public class Student : User
     {
         public Student(string FirstName, string LastName, string PESEL) : base(FirstName, LastName, PESEL) { }
         public override int MaxLoans => 2;
+        public override void PrintInfo()
+        {
+            Console.WriteLine($"==================== GUID: {Id}");
+            Console.WriteLine($"First Name: {FirstName}");
+            Console.WriteLine($"Last Name: {LastName}");
+            Console.WriteLine($"PESEL: {PESEL}");
+            Console.WriteLine($"Max Loans: {MaxLoans}");
+            Console.WriteLine($"Account Type: Student");
+        }
     }
 
     public class Employee : User
     {
         public Employee(string FirstName, string LastName, string PESEL) : base(FirstName, LastName, PESEL) { }
         public override int MaxLoans => 5;
+        public override void PrintInfo()
+        {
+            Console.WriteLine($"==================== GUID: {Id}");
+            Console.WriteLine($"First Name: {FirstName}");
+            Console.WriteLine($"Last Name: {LastName}");
+            Console.WriteLine($"PESEL: {PESEL}");
+            Console.WriteLine($"Max Loans: {MaxLoans}");
+            Console.WriteLine($"Account Type: Employee");
+        }
     }
 }
