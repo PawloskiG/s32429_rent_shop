@@ -96,8 +96,14 @@ namespace s32429_rent_shop.DOMAIN
             if (!ReturnDate.HasValue || ReturnDate <= DueDate)
                 return 0;
 
-            var daysLate = (ReturnDate.Value - DueDate).Days;
-            return daysLate * 10; // 10 PLN per day
+            if (ReturnDate.HasValue)
+            {
+                return (ReturnDate.Value - DueDate).Days * 10;
+            }
+            else
+            {
+                return (DateTime.Now - DueDate).Days * 10;
+            }
         }
     }
 }
