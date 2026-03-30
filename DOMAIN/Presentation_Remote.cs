@@ -4,7 +4,7 @@ using System.Text;
 
 namespace s32429_rent_shop.DOMAIN
 {
-    public enum Presentation_Remote
+    public enum Presentation_Remote_Interface
     {
         USB_A,
         USB_C,
@@ -13,8 +13,8 @@ namespace s32429_rent_shop.DOMAIN
 
     public class Presentation_Remote : Equipment
     {
-        private Presentation_Remote _interface;
-        public Presentation_Remote Interface
+        private Presentation_Remote_Interface _interface;
+        public Presentation_Remote_Interface Interface
         {
             get => _interface;
             set
@@ -35,7 +35,7 @@ namespace s32429_rent_shop.DOMAIN
             }
         }
 
-        public Presentation_Remote(string Vendor, string Model, string Serial_Number, Presentation_Remote Interface, bool HasPointer) : base(Vendor, Model, Serial_Number)
+        public Presentation_Remote(string Vendor, string Model, string Serial_Number, Presentation_Remote_Interface Interface, bool HasPointer) : base(Vendor, Model, Serial_Number)
         {
             this.Interface = Interface;
             this.HasPointer = HasPointer;

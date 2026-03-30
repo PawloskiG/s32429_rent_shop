@@ -39,6 +39,7 @@ class Program
         service.AddUser(new Student("Jan", "Kowalski", "85010212345"));
         service.AddUser(new Employee("Anna", "Nowak", "90030354321"));
 
-
+        service.GenerateReportUser();
+        service.GenerateReportEquipment();
     }
 }
