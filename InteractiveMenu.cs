@@ -44,7 +44,7 @@ public static class InteractiveMenu
                         service.GenerateReportEquipment();
                         break;
                     case "4":
-                        var avail = service.GetAvailableEquipment();
+                        var avail = service.FindEquipment(e => e.Status == Equipment_Status.Available);
                         Console.WriteLine("--- Available equipment ---");
                         foreach (var e in avail) e.PrintInfo();
                         break;

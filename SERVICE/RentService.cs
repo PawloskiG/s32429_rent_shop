@@ -83,7 +83,6 @@ namespace s32429_rent_shop.SERVICE
 
         public IEnumerable<Equipment> FindEquipment(Func<Equipment, bool> predicate) => _equipment.Where(predicate);
 
-        public IEnumerable<Equipment> GetAvailableEquipment() => _equipment.Where(e => e.Status == Equipment_Status.Available);
 
         public IEnumerable<User> GetAllUser() => _users;
 
