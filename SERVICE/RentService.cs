@@ -63,7 +63,7 @@ namespace s32429_rent_shop.SERVICE
 
         public void GenerateReportEquipment()
         {
-            Console.WriteLine("========== RAPORT EQUIPMENT ==========");
+            Console.WriteLine("====================     RAPORT EQUIPMENT    ====================");
             Console.WriteLine("");
 
             foreach (var equipment in _equipment)
@@ -76,7 +76,7 @@ namespace s32429_rent_shop.SERVICE
 
         public void GenerateReportUser()
         {
-            Console.WriteLine("========== RAPORT USERS ==========");
+            Console.WriteLine("====================     RAPORT USERS        ====================");
             Console.WriteLine("");
 
             foreach (var user in _users)
@@ -88,13 +88,25 @@ namespace s32429_rent_shop.SERVICE
 
         public void GenerateRaportRent()
         {
-            Console.WriteLine("========== RAPORT RENTS ==========");
+            Console.WriteLine("====================     RAPORT RENTS        ====================");
             Console.WriteLine("");
 
             foreach (var rent in _rents)
             {
                 rent.PrintInfo();
             }
+            Console.WriteLine("");
+        }
+
+        public void GenerateRaportSummary()
+        {
+            Console.WriteLine("====================     RAPORT SUMMARY      ====================");
+            Console.WriteLine("");
+            Console.WriteLine($"Total equipment: {_equipment.Count}");
+            Console.WriteLine($"Available: {_equipment.Count(e => e.Status == Equipment_Status.Available)}");
+            Console.WriteLine($"Rented: {_equipment.Count(e => e.Status == Equipment_Status.Rented)}");
+            Console.WriteLine($"Unavailable: {_equipment.Count(e => e.Status == Equipment_Status.Unavailable)}");
+            Console.WriteLine($"Active rentals: {_rents.Count(r => r.ReturnDate == null)}");
             Console.WriteLine("");
         }
     }

@@ -1,6 +1,7 @@
 ﻿using s32429_rent_shop.DOMAIN;
 using s32429_rent_shop.SERVICE;
 using System.Collections.Generic;
+using System.Linq;
 
 class Program
 {
@@ -36,10 +37,26 @@ class Program
         ));
 
         // Przykładowe dodanie użytkowników do systemu
-        service.AddUser(new Student("Jan", "Kowalski", "85010212345"));
+        service.AddUser(new Student("Jan", "Kowalski", "90030354345"));
         service.AddUser(new Employee("Anna", "Nowak", "90030354321"));
+
+        // Przykładowe wypożyczenie sprzętu
+        var userForRent = service.GetAllUser().FirstOrDefault(u => u.PESEL.Equals("90030354345", StringComparison.OrdinalIgnoreCase));
+        var equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("JSI89S0", StringComparison.OrdinalIgnoreCase));
+
+        service.RentEquipment(equipmentForRent.Id, userForRent.Id, 5);
+
+        equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("PRJ12345", StringComparison.OrdinalIgnoreCase));
+
+        service.RentEquipment(equipmentForRent.Id, userForRent.Id, 2);
+
+        // Przykładowe zwrócenie sprzętu
+        service.ReturnEquipment(equipmentForRent.Id);
+
 
         service.GenerateReportUser();
         service.GenerateReportEquipment();
+        service.GenerateRaportRent();
+        service.GenerateRaportSummary();
     }
 }
