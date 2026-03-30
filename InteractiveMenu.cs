@@ -174,14 +174,108 @@ public static class InteractiveMenu
         switch (r)
         {
             case "1":
-                service.GenerateReportEquipment();
+            {
+                Func<Equipment, bool> predicate = null;
+                Console.Write("Do you want to filter equipment report? (y/n): ");
+                if (Console.ReadLine()?.Trim().ToLower() == "y")
+                {
+                    Console.WriteLine("Equipment filters: 1) Vendor contains  2) Model contains  3) Status  4) Serial equals");
+                    var f = Console.ReadLine();
+                    switch (f)
+                    {
+                        case "1":
+                            var vendor = ReadNonEmpty("Vendor contains: ");
+                            predicate = e => e.Vendor != null && e.Vendor.IndexOf(vendor, StringComparison.OrdinalIgnoreCase) >= 0;
+                            break;
+                        case "2":
+                            var model = ReadNonEmpty("Model contains: ");
+                            predicate = e => e.Model != null && e.Model.IndexOf(model, StringComparison.OrdinalIgnoreCase) >= 0;
+                            break;
+                        case "3":
+                            Console.WriteLine("Status options: Available, Rented, Unavailable");
+                            var st = ReadNonEmpty("Status: ");
+                            if (Enum.TryParse<Equipment_Status>(st, true, out var status))
+                                predicate = e => e.Status == status;
+                            else
+                                Console.WriteLine("Unknown status - skipping filter");
+                            break;
+                        case "4":
+                            var serial = ReadNonEmpty("Serial equals: ");
+                            predicate = e => string.Equals(e.Serial_Number, serial, StringComparison.OrdinalIgnoreCase);
+                            break;
+                        default:
+                            Console.WriteLine("Unknown filter option - no filter applied");
+                            break;
+                    }
+                }
+
+                service.GenerateReportEquipment(predicate);
                 break;
+            }
             case "2":
-                service.GenerateReportUser();
+            {
+                Func<User, bool> predicate = null;
+                Console.Write("Do you want to filter users report? (y/n): ");
+                if (Console.ReadLine()?.Trim().ToLower() == "y")
+                {
+                    Console.WriteLine("User filters: 1) First name contains  2) Last name contains  3) PESEL equals");
+                    var f = Console.ReadLine();
+                    switch (f)
+                    {
+                        case "1":
+                            var first = ReadNonEmpty("First name contains: ");
+                            predicate = u => u.FirstName != null && u.FirstName.IndexOf(first, StringComparison.OrdinalIgnoreCase) >= 0;
+                            break;
+                        case "2":
+                            var last = ReadNonEmpty("Last name contains: ");
+                            predicate = u => u.LastName != null && u.LastName.IndexOf(last, StringComparison.OrdinalIgnoreCase) >= 0;
+                            break;
+                        case "3":
+                            var pesel = ReadNonEmpty("PESEL equals: ");
+                            predicate = u => string.Equals(u.PESEL, pesel, StringComparison.OrdinalIgnoreCase);
+                            break;
+                        default:
+                            Console.WriteLine("Unknown filter option - no filter applied");
+                            break;
+                    }
+                }
+
+                service.GenerateReportUser(predicate);
                 break;
+            }
             case "3":
-                service.GenerateRaportRent();
+            {
+                Func<Rent, bool> predicate = null;
+                Console.Write("Do you want to filter rents report? (y/n): ");
+                if (Console.ReadLine()?.Trim().ToLower() == "y")
+                {
+                    Console.WriteLine("Rent filters: 1) Overdue only  2) User PESEL  3) Equipment serial  4) Active (not returned)");
+                    var f = Console.ReadLine();
+                    switch (f)
+                    {
+                        case "1":
+                            predicate = rnt => rnt.IsOverdue();
+                            break;
+                        case "2":
+                            var pesel = ReadNonEmpty("User PESEL: ");
+                            predicate = rnt => string.Equals(rnt.User?.PESEL, pesel, StringComparison.OrdinalIgnoreCase);
+                            break;
+                        case "3":
+                            var serial = ReadNonEmpty("Equipment serial: ");
+                            predicate = rnt => string.Equals(rnt.Equipment?.Serial_Number, serial, StringComparison.OrdinalIgnoreCase);
+                            break;
+                        case "4":
+                            predicate = rnt => rnt.ReturnDate == null;
+                            break;
+                        default:
+                            Console.WriteLine("Unknown filter option - no filter applied");
+                            break;
+                    }
+                }
+
+                service.GenerateRaportRent(predicate);
                 break;
+            }
             case "4":
                 service.GenerateRaportSummary();
                 break;
