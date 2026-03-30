@@ -54,6 +54,15 @@ namespace s32429_rent_shop.DOMAIN
 
         public abstract int MaxLoans { get; }
         public abstract void PrintInfo();
+
+        protected void PrintBaseInfo()
+        {
+            Console.WriteLine($"==================== GUID: {Id}");
+            Console.WriteLine($"First Name: {FirstName}");
+            Console.WriteLine($"Last Name: {LastName}");
+            Console.WriteLine($"PESEL: {PESEL}");
+            Console.WriteLine($"Max Loans: {MaxLoans}");
+        }
     }
 
     public class Student : User
@@ -62,11 +71,7 @@ namespace s32429_rent_shop.DOMAIN
         public override int MaxLoans => 2;
         public override void PrintInfo()
         {
-            Console.WriteLine($"==================== GUID: {Id}");
-            Console.WriteLine($"First Name: {FirstName}");
-            Console.WriteLine($"Last Name: {LastName}");
-            Console.WriteLine($"PESEL: {PESEL}");
-            Console.WriteLine($"Max Loans: {MaxLoans}");
+            PrintBaseInfo();
             Console.WriteLine($"Account Type: Student");
         }
     }
@@ -77,11 +82,7 @@ namespace s32429_rent_shop.DOMAIN
         public override int MaxLoans => 5;
         public override void PrintInfo()
         {
-            Console.WriteLine($"==================== GUID: {Id}");
-            Console.WriteLine($"First Name: {FirstName}");
-            Console.WriteLine($"Last Name: {LastName}");
-            Console.WriteLine($"PESEL: {PESEL}");
-            Console.WriteLine($"Max Loans: {MaxLoans}");
+            PrintBaseInfo();
             Console.WriteLine($"Account Type: Employee");
         }
     }

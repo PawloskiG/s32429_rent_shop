@@ -48,5 +48,13 @@ namespace s32429_rent_shop.DOMAIN
             this.CPU_Name = CPU_Name;
             this.Size_Inch = Size_Inch;
         }
+
+        public override void PrintInfo()
+        {
+            PrintBaseInfo();
+            Console.WriteLine($"RAM (MB): {RAM_MB}");
+            Console.WriteLine($"CPU Name: {CPU_Name}");
+            Console.WriteLine($"Size (inch): {Size_Inch}");
+        }
     }
 }

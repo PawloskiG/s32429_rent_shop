@@ -68,8 +68,10 @@ namespace s32429_rent_shop.SERVICE
 
             foreach (var equipment in _equipment)
             {
-
+                equipment.PrintInfo();
             }
+
+            Console.WriteLine("");
         }
 
         public void GenerateReportUser()

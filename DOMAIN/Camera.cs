@@ -43,5 +43,12 @@ namespace s32429_rent_shop.DOMAIN
             this.Megapixels = Megapixels;
             this.Camera_Interface = Camera_Interface;
         }
+
+        public override void PrintInfo()
+        {
+            PrintBaseInfo();
+            Console.WriteLine($"Megapixels: {Megapixels}");
+            Console.WriteLine($"Camera Interface: {Camera_Interface}");
+        }
     }
 }

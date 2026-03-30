@@ -61,5 +61,13 @@ namespace s32429_rent_shop.DOMAIN
             this.Lumens = Lumens;
             this.Interfaces = Interfaces;
         }
+
+        public override void PrintInfo()
+        {
+            PrintBaseInfo();
+            Console.WriteLine($"Resolution: {Resolution}");
+            Console.WriteLine($"Lumens: {Lumens}");
+            Console.WriteLine($"Interfaces: {Interfaces}");
+        }
     }
 }
