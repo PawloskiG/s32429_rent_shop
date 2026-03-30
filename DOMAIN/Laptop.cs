@@ -13,7 +13,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (value <= 0)
-                    throw new ArgumentException("Pamięć RAM musi być większa od zera");
+                    throw new ArgumentException("RAM must be greater than zero");
                 _ram_mb = value;
             }
         }
@@ -25,7 +25,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Nazwa CPU nie może być pusta");
+                    throw new ArgumentException("CPU name cannot be empty");
                 _cpu_name = value;
             }
         }
@@ -37,7 +37,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (value <= 0)
-                    throw new ArgumentException("Rozmiar w calach musi być większy od zera");
+                    throw new ArgumentException("Size in inches must be greater than zero");
                 _size_inch = value;
             }
         }

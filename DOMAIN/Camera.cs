@@ -21,7 +21,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (value <= 0)
-                    throw new ArgumentException("Megapiksele muszą być większe od zera");
+                    throw new ArgumentException("Megapixels must be greater than zero");
                 _megapixels = value;
             }
         }
@@ -33,7 +33,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (!Enum.IsDefined(typeof(Camera_Interface), value))
-                    throw new ArgumentException("Niepoprawny interfejs kamery");
+                    throw new ArgumentException("Invalid camera interface");
                 _cameraInterface = value;
             }
         }

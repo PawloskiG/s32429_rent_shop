@@ -38,9 +38,9 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (value == default)
-                    throw new ArgumentException("StartDate musi być prawidłową datą");
+                    throw new ArgumentException("StartDate must be a valid date");
                 if (_dueDate != default && value > _dueDate)
-                    throw new ArgumentException("StartDate nie może być późniejsza niż DueDate");
+                    throw new ArgumentException("StartDate cannot be later than DueDate");
                 _startDate = value;
             }
         }
@@ -52,7 +52,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (value == default)
-                    throw new ArgumentException("DueDate musi być prawidłową datą");
+                    throw new ArgumentException("DueDate must be a valid date");
                 // wykomentowane ze względu na punkt 4 i 6 ze scenariusza demonstracyjnego, muszę jakoś wpisać datę do zwrotu starszą niż bieżący dzień
                 //if (_startDate != default && value < _startDate)
                 //throw new ArgumentException("DueDate nie może być wcześniejsza niż StartDate");
@@ -67,7 +67,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (value.HasValue && _startDate != default && value.Value < _startDate)
-                    throw new ArgumentException("ReturnDate nie może być wcześniejsza niż StartDate");
+                    throw new ArgumentException("ReturnDate cannot be earlier than StartDate");
                 _returnDate = value;
             }
         }

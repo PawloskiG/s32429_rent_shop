@@ -16,7 +16,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Imię nie może być puste");
+                    throw new ArgumentException("First name cannot be empty");
                 _firstName = value;
             }
         }
@@ -28,7 +28,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Nazwisko nie może być puste");
+                    throw new ArgumentException("Last name cannot be empty");
                 _lastName = value;
             }
         }
@@ -40,7 +40,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (string.IsNullOrWhiteSpace(value) || value.Length != 11 || !value.All(char.IsDigit))
-                    throw new ArgumentException("Niepoprawny PESEL");
+                    throw new ArgumentException("Invalid PESEL");
                 _pesel = value;
             }
         }
