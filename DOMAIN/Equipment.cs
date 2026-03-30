@@ -12,11 +12,55 @@ namespace s32429_rent_shop.DOMAIN
     }
     public abstract class Equipment
     {
-        private Guid Id { get; } = Guid.NewGuid();
-        private Equipment_Status Status { get; set; } = Equipment_Status.Available;
-        private string Vendor { get; set; }
-        private string Model { get; set; }
-        private string Serial_Number { get; set; }
+        public Guid Id { get; } = Guid.NewGuid();
+
+        private Equipment_Status _status = Equipment_Status.Available;
+        public Equipment_Status Status
+        {
+            get => _status;
+            set
+            {
+                if (!Enum.IsDefined(typeof(Equipment_Status), value))
+                    throw new ArgumentException("Niepoprawny status sprzętu");
+                _status = value;
+            }
+        }
+
+        private string _vendor;
+        public string Vendor
+        {
+            get => _vendor;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Vendor nie może być pusty");
+                _vendor = value;
+            }
+        }
+
+        private string _model;
+        public string Model
+        {
+            get => _model;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Model nie może być pusty");
+                _model = value;
+            }
+        }
+
+        private string _serial_Number;
+        public string Serial_Number
+        {
+            get => _serial_Number;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Numer seryjny nie może być pusty");
+                _serial_Number = value;
+            }
+        }
 
         protected Equipment(string Vendor, string Model, string Serial_Number)
         {
