@@ -25,9 +25,20 @@ namespace s32429_rent_shop.DOMAIN
             }
         }
 
-        public Prezentation_Remote(string Vendor, string Model, string Serial_Number, Presentation_Remote Interface) : base(Vendor, Model, Serial_Number)
+        private bool _hasPointer;
+        public bool HasPointer
+        {
+            get => _hasPointer;
+            set
+            {
+                _hasPointer = value;
+            }
+        }
+
+        public Prezentation_Remote(string Vendor, string Model, string Serial_Number, Presentation_Remote Interface, bool HasPointer) : base(Vendor, Model, Serial_Number)
         {
             this.Interface = Interface;
+            this.HasPointer = HasPointer;
         }
     }
 }
