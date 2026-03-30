@@ -73,5 +73,16 @@ namespace s32429_rent_shop.DOMAIN
         {
             this.Status = newStatus;
         }
+
+        public abstract void PrintInfo();
+
+        protected void PrintBaseInfo()
+        {
+            Console.WriteLine($"==================== GUID: {Id}");
+            Console.WriteLine($"Status: {Status}");
+            Console.WriteLine($"Vendor: {Vendor}");
+            Console.WriteLine($"Model: {Model}");
+            Console.WriteLine($"Serial Number: {Serial_Number}");
+        }
     }
 }
