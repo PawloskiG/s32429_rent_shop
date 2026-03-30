@@ -1,4 +1,4 @@
-# s32429_rent_shop
+# s32429_rent_shop APBD ćwiczenie 2
 # Paweł Gębicki s32429
 
 Krótki opis decyzji projektowych:
