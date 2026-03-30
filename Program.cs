@@ -1,6 +1,7 @@
 ﻿using s32429_rent_shop.DOMAIN;
 using s32429_rent_shop.SERVICE;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 
 class Program
@@ -80,6 +81,8 @@ class Program
             userForRent = service.FindUsers(u => u.PESEL.Equals("90030354321", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             equipmentForRent = service.FindEquipment(e => e.Serial_Number.Equals("CAM98765", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             service.RentEquipment(equipmentForRent, userForRent, -5);
+
+            service.ReturnEquipment(equipmentForRent);
         }
         catch (Exception ex)
         {

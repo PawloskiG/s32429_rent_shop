@@ -12,8 +12,23 @@ namespace s32429_rent_shop.SERVICE
         private List<User> _users = new();
         private List<Rent> _rents = new();
 
-        public void AddEquipment(Equipment equipment) => _equipment.Add(equipment);
-        public void AddUser(User user) => _users.Add(user);
+        public void AddEquipment(Equipment equipment)
+        {
+            _equipment.Add(equipment);
+            var prev = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Added equipment: {equipment.Vendor} {equipment.Model} (SN: {equipment.Serial_Number})");
+            Console.ForegroundColor = prev;
+        }
+
+        public void AddUser(User user)
+        {
+            _users.Add(user);
+            var prev = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Added user: {user.FirstName} {user.LastName} (PESEL: {user.PESEL})");
+            Console.ForegroundColor = prev;
+        }
 
         public void RentEquipment(Equipment equipment, User user, int days)
         { 
@@ -29,23 +44,37 @@ namespace s32429_rent_shop.SERVICE
             if (activeLoans >= user.MaxLoans)
                 throw new Exception("User exceeded limit");
 
-            var rental = new Rent(equipment, user, days);
-            _rents.Add(rental);
+            var rent = new Rent(equipment, user, days);
+            _rents.Add(rent);
             equipment.Status = Equipment_Status.Rented;
+
+            var prev = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Rented: {user.FirstName} {user.LastName} (SN: {equipment.Serial_Number})");
+            Console.ForegroundColor = prev;
         }
 
         public void ReturnEquipment(Equipment equipment)
         {
             if (equipment == null)
-                throw new ArgumentException("Invalid equipment ID");
+                throw new ArgumentException("Invalid equipment");
 
-            var rental = _rents.First(r => r.Equipment.Id == equipment.Id && r.ReturnDate == null);
-            rental.Return();
-            rental.Equipment.Status = Equipment_Status.Available;
+            var rent = _rents.First(r => r.Equipment.Id == equipment.Id && r.ReturnDate == null);
+            rent.Return();
+            rent.Equipment.Status = Equipment_Status.Available;
 
-            var penalty = rental.CalculatePenalty();
+            var prev = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Returned: (SN: {equipment.Serial_Number})");
+            Console.ForegroundColor = prev;
+
+            var penalty = rent.CalculatePenalty();
             if (penalty > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Penalty: {penalty} PLN");
+                Console.ForegroundColor = prev;
+            }
         }
 
         public IEnumerable<Equipment> GetAllEquipment() => _equipment;
