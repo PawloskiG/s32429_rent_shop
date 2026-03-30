@@ -11,6 +11,6 @@ Krótki opis decyzji projektowych:
 - Eksport: proste serializowanie do JSON-u, nie udało mi się zrobić niestety importu.
 - Interfejs użytkownika: dodano osobny plik `InteractiveMenu.cs` z tekstowym menu konsolowym, które pozwala na interaktywne testowanie funkcji.
 - Dalej chciałbym rozbudować aplikację o pełną obsługę zdarzeń (usuwanie użytkownika, modyfikacja sprzętu), co przy obecnym podziale na DOMAIN, SERVICE wydaje mi się łatwe do zaimplementowania
-- Przygotowałem możliwość filtrowania raportów po przekazanych predykatach (metody takie jak FindUser), ale nie udało mi się tego zaimplementować w menu, ale same metody wykorzystuję w kodzie.
+- Przygotowałem możliwość filtrowania raportów po przekazanych predykatach (metody takie jak FindUser), prosty mechanizm filtrowania wykorzystuję w interfejsie tekstowym i w innych metodach
 
 Projekt utworzono w środowisku Microsoft Visual Studio 2026 Community
