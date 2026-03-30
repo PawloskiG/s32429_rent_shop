@@ -10,57 +10,87 @@ class Program
         var service = new RentService();
 
         // Przykładowe dodanie sprzętu do systemu                                                            #1
-        service.AddEquipment(new Laptop(
-            "Dell",
-            "XPS 15",
-            "JSI89S0",
-            8192,
-            "Intel Core i7-8900K",
-            16
-        ));
+        try
+        {
+            service.AddEquipment(new Laptop(
+                "Dell",
+                "XPS 15",
+                "JSI89S0",
+                8192,
+                "Intel Core i7-8900K",
+                16
+            ));
 
-        service.AddEquipment(new Projector(
-            "Epson",
-            "EB-U05",
-            "PRJ12345",
-            "1920x1080",
-            3200,
-            new List<Projector_Interface> { Projector_Interface.HDMI, Projector_Interface.VGA }
-        ));
+            service.AddEquipment(new Projector(
+                "Epson",
+                "EB-U05",
+                "PRJ12345",
+                "1920x1080",
+                3200,
+                new List<Projector_Interface> { Projector_Interface.HDMI, Projector_Interface.VGA }
+            ));
 
-        service.AddEquipment(new Camera(
-            "Canon",
-            "EOS 250D",
-            "CAM98765",
-            24,
-            Camera_Interface.USB_C
-        ));
+            service.AddEquipment(new Camera(
+                "Canon",
+                "EOS 250D",
+                "CAM98765",
+                24,
+                Camera_Interface.USB_C
+            ));
+        }
+        catch (Exception ex)
+        {
+            var prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Error during adding an equipment: {ex.Message}");
+            Console.ForegroundColor = prevColor;
+        }
 
         // Przykładowe dodanie użytkowników do systemu                                                      # 2
-        service.AddUser(new Student("Jan", "Kowalski", "90030354345"));
-        service.AddUser(new Employee("Anna", "Nowak", "90030354321"));
+        try
+        {
+            service.AddUser(new Student("Jan", "Kowalski", "90030354345"));
+            service.AddUser(new Employee("Anna", "Nowak", "90030354321"));
+        }
+        catch (Exception ex)
+        {
+            var prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Error during adding an user: {ex.Message}");
+            Console.ForegroundColor = prevColor;
+        }
+        
 
         // Przykładowe wypożyczenie sprzętu                                                                 # 3
-        var userForRent = service.GetAllUser().FirstOrDefault(u => u.PESEL.Equals("90030354345", StringComparison.OrdinalIgnoreCase));
+        var userForRent = service.GetAllUser().FirstOrDefault(u => u.PESEL.Equals("900303543gf45", StringComparison.OrdinalIgnoreCase));
         var equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("JSI89S0", StringComparison.OrdinalIgnoreCase));
 
-        service.RentEquipment(equipmentForRent.Id, userForRent.Id, 5);
+        try
+        {
+            service.RentEquipment(equipmentForRent.Id, userForRent.Id, 5);
 
-        equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("PRJ12345", StringComparison.OrdinalIgnoreCase));
+            equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("PRJ12345", StringComparison.OrdinalIgnoreCase));
 
-        service.RentEquipment(equipmentForRent.Id, userForRent.Id, 2);
+            service.RentEquipment(equipmentForRent.Id, userForRent.Id, 2);
 
-        // Próba wypożyczenia tego samego sprzętu ponownie i przekroczenie limitu wypożyczeń przez studenta # 4
-        //service.RentEquipment(equipmentForRent.Id, userForRent.Id, 2); 
+            // Próba wypożyczenia tego samego sprzętu ponownie i przekroczenie limitu wypożyczeń przez studenta # 4
+            //service.RentEquipment(equipmentForRent.Id, userForRent.Id, 2); 
 
-        // Przykładowe zwrócenie sprzętu w terminie                                                         # 5
-        service.ReturnEquipment(equipmentForRent.Id);
+            // Przykładowe zwrócenie sprzętu w terminie                                                         # 5
+            service.ReturnEquipment(equipmentForRent.Id);
 
-        // Próba zwrotu opóźnionego sprzętu i naliczenie kary                                               # 6
-        userForRent = service.GetAllUser().FirstOrDefault(u => u.PESEL.Equals("90030354321", StringComparison.OrdinalIgnoreCase));
-        equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("CAM98765", StringComparison.OrdinalIgnoreCase));
-        service.RentEquipment(equipmentForRent.Id, userForRent.Id, -5);
-
+            // Próba zwrotu opóźnionego sprzętu i naliczenie kary                                               # 6
+            userForRent = service.GetAllUser().FirstOrDefault(u => u.PESEL.Equals("90030354321", StringComparison.OrdinalIgnoreCase));
+            equipmentForRent = service.GetAllEquipment().FirstOrDefault(e => e.Serial_Number.Equals("CAM98765", StringComparison.OrdinalIgnoreCase));
+            service.RentEquipment(equipmentForRent.Id, userForRent.Id, -5);
+        }
+        catch (Exception ex)
+        {
+            var prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Error during renting/returning an equipment: {ex.Message}");
+            Console.ForegroundColor = prevColor;
+        }
 
         // Generowanie raportów                                                                             # 7
         service.GenerateReportUser();
