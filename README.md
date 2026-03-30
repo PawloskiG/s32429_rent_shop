@@ -13,4 +13,4 @@ Krótki opis decyzji projektowych:
 - Dalej chciałbym rozbudować aplikację o pełną obsługę zdarzeń (usuwanie użytkownika, modyfikacja sprzętu), co przy obecnym podziale na DOMAIN, SERVICE wydaje mi się łatwe do zaimplementowania
 - Przygotowałem możliwość filtrowania raportów po przekazanych predykatach (metody takie jak FindUser), prosty mechanizm filtrowania wykorzystuję w interfejsie tekstowym i w innych metodach
 
-Projekt utworzono w środowisku Microsoft Visual Studio 2026 Community
+Projekt utworzono w środowisku Microsoft Visual Studio 2026 Community .NET 10.0
