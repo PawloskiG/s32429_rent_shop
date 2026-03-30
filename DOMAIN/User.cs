@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace s32429_rent_shop.DOMAIN
@@ -7,18 +8,48 @@ namespace s32429_rent_shop.DOMAIN
     public abstract class User
     {
         public Guid Id { get; } = Guid.NewGuid();
-        private string FirstName { get; set; }
-        private string LastName { get; set; }
-        private string PESEL { get; set; }
+
+        private string _firstName;
+        public string FirstName
+        {
+            get => _firstName;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Imię nie może być puste");
+                _firstName = value;
+            }
+        }
+
+        private string _lastName;
+        public string LastName
+        {
+            get => _lastName;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Nazwisko nie może być puste");
+                _lastName = value;
+            }
+        }
+
+        private string _pesel;
+        public string PESEL
+        {
+            get => _pesel;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) || value.Length != 11 || !value.All(char.IsDigit))
+                    throw new ArgumentException("Niepoprawny PESEL");
+                _pesel = value;
+            }
+        }
 
         protected User(string FirstName, string LastName, string PESEL)
         {
-            if (PESEL.Length != 11 || !PESEL.All(char.IsDigit))
-                throw new ArgumentException("Niepoprawny PESEL");
-            this.PESEL = PESEL;
             this.FirstName = FirstName;
             this.LastName = LastName;
-
+            this.PESEL = PESEL;
         }
 
         public abstract int MaxLoans { get; }
