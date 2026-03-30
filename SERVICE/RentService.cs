@@ -14,13 +14,6 @@ namespace s32429_rent_shop.SERVICE
         public void AddEquipment(Equipment equipment) => _equipment.Add(equipment);
         public void AddUser(User user) => _users.Add(user);
 
-        public IEnumerable<Equipment> GetAllEquipment() => _equipment;
-        public IEnumerable<Equipment> GetAvailableEquipment() => _equipment.Where(e => e.Status == Equipment_Status.Available);
-
-        public IEnumerable<User> GetAllUser() => _users;
-
-        public IEnumerable<Rent> GetAllRent() => _rents;
-
         public void RentEquipment(Guid equipmentId, Guid userId, int days)
         {
             var equipment = _equipment.First(e => e.Id == equipmentId);
@@ -48,6 +41,13 @@ namespace s32429_rent_shop.SERVICE
             if (penalty > 0)
                 Console.WriteLine($"Penalty: {penalty} PLN");
         }
+
+        public IEnumerable<Equipment> GetAllEquipment() => _equipment;
+        public IEnumerable<Equipment> GetAvailableEquipment() => _equipment.Where(e => e.Status == Equipment_Status.Available);
+
+        public IEnumerable<User> GetAllUser() => _users;
+
+        public IEnumerable<Rent> GetAllRent() => _rents;
 
         public IEnumerable<Rent> GetUserActiveRentals(Guid userId) =>
             _rents.Where(r => r.User.Id == userId && r.ReturnDate == null);
