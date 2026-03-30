@@ -1,0 +1,70 @@
+﻿using s32429_rent_shop.DOMAIN;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace s32429_rent_shop.SERVICE
+{
+    public class RentalService
+    {
+        private List<Equipment> _equipment = new();
+        private List<User> _users = new();
+        private List<Rent> _rents = new();
+
+        public void AddEquipment(Equipment equipment) => _equipment.Add(equipment);
+        public void AddUser(User user) => _users.Add(user);
+
+        public IEnumerable<Equipment> GetAllEquipment() => _equipment;
+        public IEnumerable<Equipment> GetAvailableEquipment() => _equipment.Where(e => e.Status == Equipment_Status.Available);
+
+        public void RentEquipment(Guid equipmentId, Guid userId, int days)
+        {
+            var equipment = _equipment.First(e => e.Id == equipmentId);
+            var user = _users.First(u => u.Id == userId);
+
+            if (equipment.Status != Equipment_Status.Available)
+                throw new Exception("Equipment not available");
+
+            var activeLoans = _rents.Count(r => r.User.Id == userId && r.ReturnDate == null);
+            if (activeLoans >= user.MaxLoans)
+                throw new Exception("User exceeded limit");
+
+            var rental = new Rent(equipment, user, days);
+            _rents.Add(rental);
+            equipment.Status = Equipment_Status.Rented;
+        }
+
+        public void ReturnEquipment(Guid equipmentId)
+        {
+            var rental = _rents.First(r => r.Equipment.Id == equipmentId && r.ReturnDate == null);
+            rental.Return();
+            rental.Equipment.Status = Equipment_Status.Available;
+
+            var penalty = rental.CalculatePenalty();
+            if (penalty > 0)
+                Console.WriteLine($"Penalty: {penalty} PLN");
+        }
+
+        public IEnumerable<Rent> GetUserActiveRentals(Guid userId) =>
+            _rents.Where(r => r.User.Id == userId && r.ReturnDate == null);
+
+        public IEnumerable<Rent> GetOverdueRentals() =>
+            _rents.Where(r => r.IsOverdue());
+
+        public void MarkUnavailable(Guid equipmentId)
+        {
+            var eq = _equipment.First(e => e.Id == equipmentId);
+            eq.Status = Equipment_Status.Unavailable;
+        }
+
+        public void GenerateReport()
+        {
+            Console.WriteLine("=== REPORT ===");
+            Console.WriteLine($"Total equipment: {_equipment.Count}");
+            Console.WriteLine($"Available: {_equipment.Count(e => e.Status == Equipment_Status.Available)}");
+            Console.WriteLine($"Rented: {_equipment.Count(e => e.Status == Equipment_Status.Rented)}");
+            Console.WriteLine($"Unavailable: {_equipment.Count(e => e.Status == Equipment_Status.Unavailable)}");
+            Console.WriteLine($"Active rentals: {_rents.Count(r => r.ReturnDate == null)}");
+        }
+    }
+}
