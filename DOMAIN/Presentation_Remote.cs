@@ -20,7 +20,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (!Enum.IsDefined(typeof(Presentation_Remote), value))
-                    throw new ArgumentException("Niepoprawny interfejs pilota prezentacji");
+                    throw new ArgumentException("Invalid presentation remote interface");
                 _interface = value;
             }
         }

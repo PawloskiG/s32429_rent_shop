@@ -21,7 +21,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (!Enum.IsDefined(typeof(Equipment_Status), value))
-                    throw new ArgumentException("Niepoprawny status sprzętu");
+                    throw new ArgumentException("Invalid equipment status");
                 _status = value;
             }
         }
@@ -33,7 +33,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Vendor nie może być pusty");
+                    throw new ArgumentException("Vendor cannot be empty");
                 _vendor = value;
             }
         }
@@ -45,7 +45,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Model nie może być pusty");
+                    throw new ArgumentException("Model cannot be empty");
                 _model = value;
             }
         }
@@ -57,7 +57,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Numer seryjny nie może być pusty");
+                    throw new ArgumentException("Serial number cannot be empty");
                 _serial_Number = value;
             }
         }

@@ -21,7 +21,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Rozdzielczość nie może być pusta");
+                    throw new ArgumentException("Resolution cannot be empty");
                 _resolution = value;
             }
         }
@@ -33,7 +33,7 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (value <= 0)
-                    throw new ArgumentException("Lumens musi być większy od zera");
+                    throw new ArgumentException("Lumens must be greater than zero");
                 _lumens = value;
             }
         }
@@ -45,11 +45,11 @@ namespace s32429_rent_shop.DOMAIN
             set
             {
                 if (value == null || value.Count == 0)
-                    throw new ArgumentException("Lista interfejsów nie może być pusta");
+                    throw new ArgumentException("Interfaces list cannot be empty");
                 foreach (var i in value)
                 {
                     if (!Enum.IsDefined(typeof(Projector_Interface), i))
-                        throw new ArgumentException("Niepoprawny interfejs w liście");
+                        throw new ArgumentException("Invalid interface in list");
                 }
                 _interfaces = value;
             }
