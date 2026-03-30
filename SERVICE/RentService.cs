@@ -105,6 +105,50 @@ namespace s32429_rent_shop.SERVICE
             eq.Status = Equipment_Status.Unavailable;
         }
 
+        public void GenerateReportEquipment(Func<Equipment, bool> predicate = null, string jsonFile = null)
+        {
+            var list = predicate == null ? GetAllEquipment() : FindEquipment(predicate);
+            Console.WriteLine("====================     RAPORT EQUIPMENT    ====================");
+            Console.WriteLine("");
+
+            foreach (var equipment in list)
+            {
+                equipment.PrintInfo();
+            }
+
+            Console.WriteLine("");
+        }
+
+        public void GenerateReportUser(Func<User, bool> predicate = null, string jsonFile = null)
+        {
+            var list = predicate == null ? GetAllUser() : FindUsers(predicate);
+
+
+            Console.WriteLine("====================     RAPORT USERS        ====================");
+            Console.WriteLine("");
+
+            foreach (var user in list)
+            {
+                user.PrintInfo();
+            }
+            Console.WriteLine("");
+        }
+
+        public void GenerateRaportRent(Func<Rent, bool> predicate = null, string jsonFile = null)
+        {
+            var list = predicate == null ? GetAllRent() : FindRents(predicate);
+
+
+            Console.WriteLine("====================     RAPORT RENTS        ====================");
+            Console.WriteLine("");
+
+            foreach (var rent in list)
+            {
+                rent.PrintInfo();
+            }
+            Console.WriteLine("");
+        }
+
         private void ExportToJson<T>(IEnumerable<T> list, string jsonFile, string entityName)
         {
             try
@@ -126,67 +170,17 @@ namespace s32429_rent_shop.SERVICE
             }
         }
 
-
-
-        public void GenerateReportEquipment(Func<Equipment, bool> predicate = null, string jsonFile = null)
+        public void ExportAllToJson()
         {
-            var list = predicate == null ? GetAllEquipment() : FindEquipment(predicate);
+            var equipmentFileName = $"equipment_{DateTime.Now:dd-MM-yyyy}.json";
 
-            var fileName = !string.IsNullOrEmpty(jsonFile)
-                ? jsonFile
-                : $"equipment_{DateTime.Now:dd-MM-yyyy}.json";
+            var usersFileName = $"users_{DateTime.Now:dd-MM-yyyy}.json";
 
-            ExportToJson(list, fileName, "equipment");
+            var rentsFileName = $"rent_{DateTime.Now:dd-MM-yyyy}.json";
 
-            Console.WriteLine("====================     RAPORT EQUIPMENT    ====================");
-            Console.WriteLine("");
-
-            foreach (var equipment in list)
-            {
-                equipment.PrintInfo();
-            }
-
-            Console.WriteLine("");
-        }
-
-        public void GenerateReportUser(Func<User, bool> predicate = null, string jsonFile = null)
-        {
-            var list = predicate == null ? GetAllUser() : FindUsers(predicate);
-
-            var fileName = !string.IsNullOrEmpty(jsonFile)
-                ? jsonFile
-                : $"users_{DateTime.Now:dd-MM-yyyy}.json";
-
-            ExportToJson(list, fileName, "users");
-
-            Console.WriteLine("====================     RAPORT USERS        ====================");
-            Console.WriteLine("");
-
-            foreach (var user in list)
-            {
-                user.PrintInfo();
-            }
-            Console.WriteLine("");
-        }
-
-        public void GenerateRaportRent(Func<Rent, bool> predicate = null, string jsonFile = null)
-        {
-            var list = predicate == null ? GetAllRent() : FindRents(predicate);
-
-            var fileName = !string.IsNullOrEmpty(jsonFile)
-                ? jsonFile
-                : $"rent_{DateTime.Now:dd-MM-yyyy}.json";
-
-            ExportToJson(list, fileName, "rents");
-
-            Console.WriteLine("====================     RAPORT RENTS        ====================");
-            Console.WriteLine("");
-
-            foreach (var rent in list)
-            {
-                rent.PrintInfo();
-            }
-            Console.WriteLine("");
+            ExportToJson(_equipment, equipmentFileName, "equipment");
+            ExportToJson(_users, usersFileName, "users");
+            ExportToJson(_rents, rentsFileName, "rents");
         }
 
         public void GenerateRaportSummary()

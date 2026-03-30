@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="DOMAIN\" />
+    <Folder Include="UI\" />
   </ItemGroup>
 
 </Project>
