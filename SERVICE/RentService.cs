@@ -85,5 +85,17 @@ namespace s32429_rent_shop.SERVICE
             }
             Console.WriteLine("");
         }
+
+        public void GenerateRaportRent()
+        {
+            Console.WriteLine("========== RAPORT RENTS ==========");
+            Console.WriteLine("");
+
+            foreach (var rent in _rents)
+            {
+                rent.PrintInfo();
+            }
+            Console.WriteLine("");
+        }
     }
 }

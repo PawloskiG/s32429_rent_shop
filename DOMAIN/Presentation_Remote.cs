@@ -46,6 +46,7 @@ namespace s32429_rent_shop.DOMAIN
             PrintBaseInfo();
             Console.WriteLine($"Presentation Remote Interface: {Interface}");
             Console.WriteLine($"Has Pointer: {HasPointer}");
+            Console.WriteLine($"    Equipment type: Presentation Remote");
         }
     }
 }

@@ -68,6 +68,7 @@ namespace s32429_rent_shop.DOMAIN
             Console.WriteLine($"Resolution: {Resolution}");
             Console.WriteLine($"Lumens: {Lumens}");
             Console.WriteLine($"Interfaces: {string.Join(", ", Interfaces.ConvertAll(i => i.ToString()))}");
+            Console.WriteLine($"    Equipment type: Projector");
         }
     }
 }

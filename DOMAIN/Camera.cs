@@ -49,6 +49,7 @@ namespace s32429_rent_shop.DOMAIN
             PrintBaseInfo();
             Console.WriteLine($"Megapixels: {Megapixels}");
             Console.WriteLine($"Camera Interface: {Camera_Interface}");
+            Console.WriteLine($"    Equipment type: Camera");
         }
     }
 }

@@ -55,6 +55,7 @@ namespace s32429_rent_shop.DOMAIN
             Console.WriteLine($"RAM (MB): {RAM_MB}");
             Console.WriteLine($"CPU Name: {CPU_Name}");
             Console.WriteLine($"Size (inch): {Size_Inch}");
+            Console.WriteLine($"    Equipment type: Laptop");
         }
     }
 }

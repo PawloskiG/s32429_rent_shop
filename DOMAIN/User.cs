@@ -72,7 +72,7 @@ namespace s32429_rent_shop.DOMAIN
         public override void PrintInfo()
         {
             PrintBaseInfo();
-            Console.WriteLine($"Account Type: Student");
+            Console.WriteLine($"    Account Type: Student");
         }
     }
 
@@ -83,7 +83,7 @@ namespace s32429_rent_shop.DOMAIN
         public override void PrintInfo()
         {
             PrintBaseInfo();
-            Console.WriteLine($"Account Type: Employee");
+            Console.WriteLine($"    Account Type: Employee");
         }
     }
 }

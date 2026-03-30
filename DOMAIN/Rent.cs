@@ -6,6 +6,7 @@ namespace s32429_rent_shop.DOMAIN
 {
     public class Rent
     {
+        public Guid Id { get; } = Guid.NewGuid();
         private Equipment _equipment;
         public Equipment Equipment
         {
@@ -98,6 +99,18 @@ namespace s32429_rent_shop.DOMAIN
 
             var daysLate = (ReturnDate.Value - DueDate).Days;
             return daysLate * 10; // 10 PLN per day
+        }
+
+        public void PrintInfo()
+        {
+            Console.WriteLine($"==================== GUID: {Id}");
+            Console.WriteLine($"Equipment: {Equipment.Vendor} {Equipment.Model} {Equipment.Serial_Number} (ID: {Equipment.Id})");
+            Console.WriteLine($"User: {User.FirstName} {User.LastName} (ID: {User.Id})");
+            Console.WriteLine($"Start Date: {StartDate}");
+            Console.WriteLine($"Due Date: {DueDate}");
+            Console.WriteLine($"Return Date: {(ReturnDate.HasValue ? ReturnDate.Value.ToString() : "Not returned")}");
+            Console.WriteLine($"Overdue: {(IsOverdue() ? "Yes" : "No")}");
+            Console.WriteLine($"Penalty: {CalculatePenalty()} PLN");
         }
     }
 }
