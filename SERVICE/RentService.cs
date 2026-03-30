@@ -15,15 +15,14 @@ namespace s32429_rent_shop.SERVICE
         public void AddUser(User user) => _users.Add(user);
 
         public void RentEquipment(Guid equipmentId, Guid userId, int days)
-        {
-            if(equipmentId == Guid.Empty)
-                throw new ArgumentException("Invalid equipment ID");
-
-            if(userId == Guid.Empty)
-                throw new ArgumentException("Invalid user ID");
-
+        { 
             var equipment = _equipment.First(e => e.Id == equipmentId);
             var user = _users.First(u => u.Id == userId);
+
+            if(equipment == null)
+                throw new Exception("Equipment not found");
+            if (user == null)
+                throw new Exception("User not found");
 
             if (equipment.Status != Equipment_Status.Available)
                 throw new Exception("Equipment not available");
