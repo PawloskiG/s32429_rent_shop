@@ -93,17 +93,20 @@ namespace s32429_rent_shop.DOMAIN
 
         public decimal CalculatePenalty()
         {
-            if (!ReturnDate.HasValue || ReturnDate <= DueDate)
-                return 0;
-
             if (ReturnDate.HasValue)
             {
-                return (ReturnDate.Value - DueDate).Days * 10;
+                if (ReturnDate.Value <= DueDate)
+                    return 0;
+
+                var daysLate = (ReturnDate.Value - DueDate).Days;
+                return daysLate * 10;
             }
-            else
-            {
-                return (DateTime.Now - DueDate).Days * 10;
-            }
+
+            if (DateTime.Now <= DueDate)
+                return 0;
+
+            var daysOverdue = (DateTime.Now - DueDate).Days;
+            return daysOverdue * 10;
         }
     }
 }
