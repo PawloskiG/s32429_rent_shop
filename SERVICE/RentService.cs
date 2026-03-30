@@ -5,7 +5,7 @@ using System.Text;
 
 namespace s32429_rent_shop.SERVICE
 {
-    public class RentalService
+    public class RentService
     {
         private List<Equipment> _equipment = new();
         private List<User> _users = new();
